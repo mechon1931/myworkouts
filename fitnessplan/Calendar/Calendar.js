@@ -1,74 +1,79 @@
 import React, {useState} from 'react';
 import { Agenda} from 'react-native-calendars';
-import { View, TouchableOpacity, Text, StyleSheet } from 'react-native';
+import { View, Text, StyleSheet } from 'react-native';
+
 
 const Calendars = () => {
   const [selected, setSelected] = useState('');
 
+  const data = {
+    
+    // Add more data as needed
+  };
+
   const renderItem = (item) => (
-    <View>
+    <View style={styles.item}>
       <Text>{item.text}</Text>
     </View>
   );
 
   const renderDay = (day, item) => (
-    <View>
+    <View style={styles.day}>
       <Text>{day.day}</Text>
     </View>
   );
 
   const renderEmptyDate = () => (
-    <View>
+    <View style={styles.emptyDate}>
       <Text>No events for this date</Text>
     </View>
   );
 
-  const customHeader = ({ year, month }) => {
-    <View style={styles.header}>
-      <TouchableOpacity onPress={() => console.log('Go Back')}>
-        <Text>{'<'} Back</Text>
-      </TouchableOpacity>
-      <Text>{`${year}-${month}`}</Text>
-      <TouchableOpacity onPress={() => console.log('Go Forward')}>
-        <Text>Forward {'>'}</Text>
-      </TouchableOpacity>
-    </View>
-  };
-
   return(
-    <Agenda
-      items={{
-        '2024-01-11': [{text: 'Item 1'}],
-        '2024-01-12': [],
-        '2024-01-13': [{ text: 'Item 2' }]
-      }}
-      selected={selected}
-      renderItem={renderItem}
-      renderEmptyData={renderEmptyDate}
-      renderDay={renderDay}
-      theme={{
-        selectedDayBackgroundColor: 'orange',
-        dotColor: 'orange',
-        selectedDotColor: 'white',
-      }}
-      ListHeaderComponent={customHeader}
-      onDayPress={(day) => {
-        setSelected(day.dateString);
-      }}
-      >
-      
-    </Agenda>
+            
+      <Agenda
+        selected={selected}
+        items={data}
+        renderItem={renderItem}
+        renderEmptyData={renderEmptyDate}
+        renderDay={renderDay}
+        theme={{
+          selectedDayBackgroundColor: 'orange',
+          dotColor: 'orange',
+          selectedDotColor: 'white',
+        }}
+        onDayPress={(day) => {
+          setSelected(day.dateString);
+        }}
+    />
   );
 };
 
 const styles = StyleSheet.create({
-  header: {
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  item: {
+    flex: 1,
+    justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 10,
+    borderWidth: 1,
+    borderColor: 'lightgray',
+    margin: 5,
     padding: 10,
-    backgroundColor: 'lightgray',
+  },
+  day: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 50,
+    borderBottomWidth: 1,
+    borderBottomColor: 'lightgray',
+  },
+  emptyDate: {
+    flex: 1,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderWidth: 1,
+    borderColor: 'lightgray',
+    margin: 5,
+    padding: 10,
   },
 });
 
