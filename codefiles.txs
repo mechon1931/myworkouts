@@ -1,0 +1,22 @@
+<Calendar 
+        
+        onDayPress={day => { setSelected(day.dateString);
+        }}
+        markedDates={{
+          [selected]: {selected: true}
+        }}
+        style={{
+          borderWidth: 1,
+          borderColor: 'gray',
+        }}
+        theme={{
+        backgroundColor: '#ffffff',
+        calendarBackground: '#ffffff',
+        textSectionTitleColor: '#b6c1cd',
+        selectedDayBackgroundColor: '#00adf5',
+        selectedDayTextColor: '#ffffff',
+        todayTextColor: '#00adf5',
+        dayTextColor: '#2d4150',
+        textDisabledColor: '#d9e'
+        }} 
+      />
