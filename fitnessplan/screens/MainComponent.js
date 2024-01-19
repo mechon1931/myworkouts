@@ -34,32 +34,6 @@ const HomeNavigator = () => {
   );
 };
 
-const DirectoryNavigator = () => {
-  const Stack = createStackNavigator();
-
-  return (
-    <Stack.Navigator
-      initialRouteName='Directory'
-      screenOptions={screenOptions}
-    >
-      <Stack.Screen 
-        name='Directory'
-        component={DirectoryScreen}
-        options={{
-          title: 'Exercise Directory'
-        }}
-      />
-
-      <Stack.Screen 
-        name='ExerciseInfo'
-        component={ExerciseInfoScreen}
-        options={({ route }) => ({
-          title: route.params.exercise.name
-        })}
-      />
-    </Stack.Navigator>
-  );
-};
 
 const AboutNavigator = () => {
   const Stack = createStackNavigator();
@@ -89,6 +63,35 @@ const ContactNavigator = () => {
   )
 };
 
+const DirectoryNavigator = () => {
+  const Stack = createStackNavigator();
+
+  return (
+    <Stack.Navigator
+      initialRouteName='Directory'
+      screenOptions={screenOptions}
+    >
+      <Stack.Screen 
+        name='Directory'
+        component={DirectoryScreen}
+        options={{
+          title: 'Exercise Directory'
+        }}
+      />
+
+      <Stack.Screen 
+        name='ExerciseInfo'
+        component={ExerciseInfoScreen}
+        options={({ route }) => ({
+          title: route.params.exercise.name
+        })}
+      />
+    </Stack.Navigator>
+  );
+};
+
+
+//this is the sidebar
 const Main = () => {
 
   return (
