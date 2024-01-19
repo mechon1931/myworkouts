@@ -1,28 +1,88 @@
-import { useState } from 'react';
-import { View } from 'react-native';
+//import { useState } from 'react';
+import { Platform, View } from 'react-native';
+import Constants from 'expo-constants';
+import { createStackNavigator } from '@react-navigation/stack';
+import { createDrawerNavigator } from '@react-navigation/drawer';
 
-import { EXERCISES } from '../shared/exercises';
+//import { EXERCISES } from '../shared/exercises';
+import HomeScreen from './HomeScreen';
 import DirectoryScreen from './DirectoryScreen';
 import ExerciseInfoScreen from './ExerciseInfoScreen';
 
-const Main = () => {
-  const [exercises, setExercises] = useState(EXERCISES);
-  const [selectedExerciseId, setSelectedExerciseId] = useState();
+const Drawer = createDrawerNavigator();
+
+const screenOptions = {
+  headerTintColor: '#fff',
+  headerStyle: { backgroundColor: '#ff0000' }
+};
+
+const HomeNavigator = () => {
+  const Stack = createStackNavigator();
+
+  return(
+    <Stack.Navigator
+      screenOptions={screenOptions}
+    >
+      <Stack.Screen 
+        name='Home'
+        component={HomeScreen}
+        options={{ title: 'Home' }}  
+      />
+    </Stack.Navigator>
+  );
+};
+
+const DirectoryNavigator = () => {
+  const Stack = createStackNavigator();
 
   return (
-    <View style={{ flex: 1 }}>
-      <DirectoryScreen 
-        exercises={exercises} 
-        onPress={(exerciseId) => setSelectedExerciseId(exerciseId)}  
+    <Stack.Navigator
+      initialRouteName='Directory'
+      screenOptions={screenOptions}
+    >
+      <Stack.Screen 
+        name='Directory'
+        component={DirectoryScreen}
+        options={{
+          title: 'Exercise Directory'
+        }}
       />
 
-      <ExerciseInfoScreen
-        exercise={
-          exercises.filter(
-            (exercise) => exercise.id === selectedExerciseId
-          )[0]
-        }
+      <Stack.Screen 
+        name='ExerciseInfo'
+        component={ExerciseInfoScreen}
+        options={({ route }) => ({
+          title: route.params.exercise.name
+        })}
       />
+    </Stack.Navigator>
+  );
+};
+
+const Main = () => {
+
+  return (
+    <View style={{ 
+        flex: 1, 
+        paddingTop: Platform.OS === 'ios' ? 0 : Constants.statusBarHeight 
+      }}
+    >
+      <Drawer.Navigator 
+        initialRouteName='Home'
+        drawerStyle={{ backgroundColor: '#CEC8FF' }}
+      >
+        <Drawer.Screen
+          name='Home'
+          component={HomeNavigator}
+          options={{ title: 'Home' }}
+        />
+        <Drawer.Screen 
+          name='Directory'
+          component={DirectoryNavigator}
+          options={{ title: 'Directory' }}
+        />
+
+      </Drawer.Navigator>
     </View>
   );
 };
